@@ -2,7 +2,7 @@ import { generateCodeVerifier, generateCodeChallenge } from './pkce';
 
 const SPOTIFY_AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
 const SPOTIFY_TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token';
-const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
+const REDIRECT_URI = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
 const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 
 export async function redirectToSpotifyAuth() {
