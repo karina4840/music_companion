@@ -59,6 +59,6 @@ Create a `.env` file in the project root with the following:
 
 ```env
 VITE_SPOTIFY_CLIENT_ID=your_spotify_client_id
-VITE_SPOTIFY_REDIRECT_URI=http://localhost:3000/callback
+VITE_REDIRECT_URI=http://localhost:3000/callback
 VITE_OPENAI_API_KEY=your_openai_api_key
 ```
