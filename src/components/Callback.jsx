@@ -18,7 +18,7 @@ const Callback = () => {
         const body = new URLSearchParams({
           grant_type: "authorization_code",
           code,
-          redirect_uri: import.meta.env.VITE_REDIRECT_URI,
+          redirect_uri: import.meta.env.VITE_SPOTIFY_REDIRECT_URI,
           client_id: import.meta.env.VITE_SPOTIFY_CLIENT_ID,
           code_verifier: codeVerifier,
         });
@@ -32,6 +32,8 @@ const Callback = () => {
         });
 
         if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Token error details:", errorData);
           throw new Error("Failed to get access token");
         }
 
