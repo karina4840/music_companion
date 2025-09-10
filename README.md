@@ -1,14 +1,14 @@
 # 🎵 MoodTunes – AI Spotify Playlist Generator
 
-MoodTunes is a modern web app that uses AI to analyze your Spotify playlists and generate new, personalized playlists based on your music taste.
+MoodTunes is a modern web app that uses AI to analyse your Spotify playlists and generate new, personalised playlists based on your music taste.
 
 ## 🚀 Features
 
 - **Spotify Integration** -  Log in with your Spotify account, view and select your playlists, and save new playlists directly to your Spotify library.
-- **AI-Powered Analysis** - Uses OpenAI to analyze your selected playlists and generate a unique playlist tailored to your preferences.
+- **AI-Powered Analysis** - Uses OpenAI to analyse your selected playlists and generate a unique playlist tailored to your preferences.
 - **Playlist History** -  Every generated playlist is saved to your personal history for easy access and replay.
 - **Responsive UI** - Built with Tailwind CSS for a seamless experience on any device.
-- **Modern Stack** -  React 18, Vite, React Router v6, Framer Motion, and more.
+- **Modern Stack** -  React 18, Vite, React Router v6, and more.
 
 ## 📋 Prerequisites
 
