@@ -1,4 +1,3 @@
-// src/pages/generated-playlist-screen/components/TrackList.jsx
 import React, { useState } from "react";
 import TrackItem from "./TrackItem";
 import Icon from "../../../components/AppIcon";

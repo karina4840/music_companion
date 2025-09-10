@@ -1,7 +1,4 @@
-
-
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Header from '../../components/ui/Header';
 import AuthButton from './components/AuthButton';
 import LoadingSpinner from './components/LoadingSpinner';
@@ -12,7 +9,6 @@ import { redirectToSpotifyAuth } from 'services/auth';
 const LoginConnectionScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
   const handleSpotifyConnect = async () => {
     setIsLoading(true);

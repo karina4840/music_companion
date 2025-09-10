@@ -1,4 +1,3 @@
-// src/pages/generated-playlist-screen/components/ActionButtons.jsx
 import React, { useState } from "react";
 import Icon from "../../../components/AppIcon";
 import { createPlaylist, addTracksToPlaylist } from "../../../services/spotify";

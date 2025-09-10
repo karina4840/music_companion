@@ -143,6 +143,11 @@ export async function generatePersonalizedPlaylist(
     console.log("OpenAI Response:", response);
     const generatedPlaylist = JSON.parse(response.choices[0].message.content);
     console.log("Parsed Generated Playlist:", generatedPlaylist);
+    
+    // checking if AI changed the playlist name
+    if (generatedPlaylist.name !== playlistName) {
+      console.warn(`AI changed playlist name from "${playlistName}" to "${generatedPlaylist.name}"`);
+    }
 
     // Search for tracks on Spotify and get their URIs
     const enhancedTracks = await Promise.all(
@@ -185,17 +190,23 @@ export async function generatePersonalizedPlaylist(
 
           return {
             id: spotifyTrack.id,
-            name: track.name,
-            artists: [track.artist],
-            album: track.album || spotifyTrack.album.name,
+            name: spotifyTrack.name, 
+            artists: spotifyTrack.artists.map(artist => artist.name), 
+            album: spotifyTrack.album.name,
             duration: spotifyTrack.duration_ms,
-            why_recommended: track.why_recommended,
+            why_recommended: track.why_recommended, // OpenAI's reasoning
             uri: spotifyTrack.uri,
             albumArt: spotifyTrack.album.images[0]?.url,
+            // storing original OpenAI recommendation for reference
+            originalRecommendation: {
+              name: track.name,
+              artist: track.artist,
+              album: track.album
+            }
           };
         } catch (error) {
           console.error(`Error searching for track: ${track.name}`, error);
-          // Try alternative search with just the track name
+          // trying alternative search with just the track name
           try {
             const token = await getValidAccessToken();
             const searchResponse = await fetch(
@@ -228,13 +239,18 @@ export async function generatePersonalizedPlaylist(
 
             return {
               id: spotifyTrack.id,
-              name: track.name,
-              artists: [track.artist],
-              album: track.album || spotifyTrack.album.name,
+              name: spotifyTrack.name, 
+              artists: spotifyTrack.artists.map(artist => artist.name), 
+              album: spotifyTrack.album.name,
               duration: spotifyTrack.duration_ms,
-              why_recommended: track.why_recommended,
+              why_recommended: track.why_recommended, 
               uri: spotifyTrack.uri,
               albumArt: spotifyTrack.album.images[0]?.url,
+              originalRecommendation: {
+                name: track.name,
+                artist: track.artist,
+                album: track.album
+              }
             };
           } catch (retryError) {
             console.error(
@@ -262,6 +278,7 @@ export async function generatePersonalizedPlaylist(
 
     const finalPlaylist = {
       ...generatedPlaylist,
+      name: playlistName, 
       id: `ai-playlist-${Date.now()}`,
       tracks: validTracks,
       coverImage: "",
@@ -278,22 +295,6 @@ export async function generatePersonalizedPlaylist(
       "Failed to generate your personalized playlist. Please try again."
     );
   }
-}
-
-function convertDurationToMs(durationString) {
-  if (!durationString || typeof durationString !== "string") {
-    return 210000; // Default 3:30
-  }
-
-  const parts = durationString.split(":");
-  if (parts.length !== 2) {
-    return 210000;
-  }
-
-  const minutes = parseInt(parts[0]) || 0;
-  const seconds = parseInt(parts[1]) || 0;
-
-  return (minutes * 60 + seconds) * 1000;
 }
 
 export async function generateMusicInsights(analysisResults) {

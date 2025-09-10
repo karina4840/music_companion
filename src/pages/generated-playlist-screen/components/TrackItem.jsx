@@ -1,4 +1,3 @@
-// src/pages/generated-playlist-screen/components/TrackItem.jsx
 import React, { useState } from "react";
 import Icon from "../../../components/AppIcon";
 import AppImage from "../../../components/AppImage";
@@ -8,6 +7,7 @@ const TrackItem = ({ track, index, showReason = false }) => {
   const [imageError, setImageError] = useState(false);
   const [error, setError] = useState(null);
 
+  
   const formatDuration = (milliseconds) => {
     if (!milliseconds) return "0:00";
 
@@ -94,10 +94,21 @@ const TrackItem = ({ track, index, showReason = false }) => {
                 <div className="w-5 h-5 bg-primary bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                   <Icon name="Brain" size={12} className="text-primary" />
                 </div>
-                <p className="text-xs text-text-secondary leading-relaxed">
-                  <span className="font-medium text-primary">AI Pick:</span>{" "}
-                  {track.why_recommended}
-                </p>
+                <div className="text-xs text-text-secondary leading-relaxed">
+                  <p>
+                    <span className="font-medium text-primary">AI Pick:</span>{" "}
+                    {track.why_recommended}
+                  </p>
+                
+                  {track.originalRecommendation && 
+                   (track.originalRecommendation.name !== track.name || 
+                    track.originalRecommendation.artist !== artistString) && (
+                    <p className="mt-1 text-text-disabled">
+                      <span className="font-medium">Originally suggested:</span>{" "}
+                      {track.originalRecommendation.name} by {track.originalRecommendation.artist}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           )}
